@@ -5,7 +5,6 @@ import json
 import base64
 import time
 from st_clickable_images import clickable_images
-import os
 
 if "current_section" not in st.session_state:
     st.session_state.current_section = None
@@ -50,12 +49,7 @@ elif menu == "🧘 Color Tracker":
     st.title("🖍️ Color Preference Tracker")
     st.info("Track color attention using predefined gaze-based games.")
 
-    result_paths = {
-        "Tracker 1": "D:/Streamlite/colorresult.txt",
-        "Tracker 2": "D:/Streamlite/colorresult1.txt",
-        "Tracker 3": "D:/Streamlite/colorresult3.txt",
-        "Tracker 4": "D:/Streamlite/cognitive_report.txt",
-    }
+    
 
     script_paths = {
         "Tracker 1": "pages/color1.py",
