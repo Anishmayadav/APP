@@ -1,5 +1,4 @@
 import os
-import streamlit as st
 import pygame
 import numpy as np
 from PIL import Image
