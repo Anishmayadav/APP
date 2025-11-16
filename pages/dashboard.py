@@ -1,17 +1,20 @@
-import streamlit as st
-import os
+import pygame
+import sys
 
-st.set_page_config(page_title="Autistic Support Dashboard", layout="wide")
+pygame.init()
+WIDTH, HEIGHT = 600, 400
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Color Tracker 1")
+color = (100, 150, 255)
 
-st.title("🏠 Autistic Support Dashboard")
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+            running = False
 
-st.subheader("🧘 Color Tracker")
+    window.fill(color)
+    pygame.display.update()
 
-st.markdown("### Tracker Pages")
-
-st.markdown("""
-- <a href="https://anishmayadav.github.io/color1.py/" target="_blank">🟦 Open Color Tracker 1</a>
-- <a href="https://yourname.github.io/color2/" target="_blank">🟩 Open Color Tracker 2</a>
-- <a href="https://yourname.github.io/color3/" target="_blank">🟧 Open Color Tracker 3</a>
-- <a href="https://yourname.github.io/color4/" target="_blank">🟥 Open Color Tracker 4</a>
-""", unsafe_allow_html=True)
+pygame.quit()
+sys.exit()
