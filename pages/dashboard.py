@@ -129,4 +129,4 @@ elif menu == "🧘 Color Tracker":
         show_tracker_controls("Tracker 3")
 
     with tab4:
-        show_tracker_controls("Tracker 4") give full code run on streamlite cloud
+        show_tracker_controls("Tracker 4") 
