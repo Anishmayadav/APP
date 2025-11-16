@@ -1,43 +1,35 @@
 import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"   # Run pygame headless
+
 import streamlit as st
 import pygame
 import numpy as np
 from PIL import Image
 import time
 
-# --- Important: Run Pygame in headless mode ---
-os.environ["SDL_VIDEODRIVER"] = "dummy"
-
+# --- Setup ---
 pygame.init()
-screen = pygame.Surface((600, 400))
-color = (255, 0, 0)
+WIDTH, HEIGHT = 400, 300
+screen = pygame.Surface((WIDTH, HEIGHT))
 
-st.title("🎮 Pygame Color Game inside Streamlit")
+st.title("🎮 Mini Pygame Demo in Streamlit")
 
-start_button = st.button("Start Game")
-
-if start_button:
+if st.button("Start Game"):
     placeholder = st.empty()
-    running = True
-    frame_rate = 30
+    color = (255, 0, 0)
     clock = pygame.time.Clock()
-    start_time = time.time()
+    start = time.time()
 
-    while running:
-        # Fill the screen with color
+    while time.time() - start < 5:  # Run for 5 seconds
         screen.fill(color)
 
-        # Convert to NumPy array for display
-        image_array = pygame.surfarray.array3d(screen)
-        image_array = np.rot90(image_array)
-        img = Image.fromarray(image_array)
+        # Convert pygame surface → numpy → PIL image
+        frame = pygame.surfarray.array3d(screen)
+        frame = np.rot90(frame)
+        img = Image.fromarray(frame)
 
-        placeholder.image(img, caption="Color Game Running...", use_container_width=True)
+        placeholder.image(img, use_container_width=True)
 
-        clock.tick(frame_rate)
-
-        # Run for ~10 seconds as demo
-        if time.time() - start_time > 10:
-            running = False
+        clock.tick(30)  # 30 FPS
 
 pygame.quit()
