@@ -10,7 +10,7 @@ st.subheader("🧘 Color Tracker")
 st.markdown("### Tracker Pages")
 
 st.markdown("""
-- <a href="https://anishmayadav.github.io/color1/" target="_blank">🟦 Open Color Tracker 1</a>
+- <a href="https://anishmayadav.github.io/color1.py/" target="_blank">🟦 Open Color Tracker 1</a>
 - <a href="https://yourname.github.io/color2/" target="_blank">🟩 Open Color Tracker 2</a>
 - <a href="https://yourname.github.io/color3/" target="_blank">🟧 Open Color Tracker 3</a>
 - <a href="https://yourname.github.io/color4/" target="_blank">🟥 Open Color Tracker 4</a>
