@@ -1,3 +1,5 @@
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 import streamlit as st
 import cv2
 from deepface import DeepFace
