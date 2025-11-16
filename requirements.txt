@@ -1,24 +1,16 @@
 numpy==1.23.5
 protobuf==3.20.3
-
-# DeepFace compatible TensorFlow version
-tensorflow==2.10.0
-tensorflow-estimator==2.10.0
-
+tensorflow==2.12.0
 streamlit==1.39.0
 streamlit-extras==0.4.0
-
 supabase==2.4.3
 python-dotenv==1.0.1
-
 pygame==2.5.2
-opencv-python-headless==4.8.1.78
-pillow
-
-deepface==0.0.79
-
-# Logging and markdown
 rich==13.9.4
 markdown-it-py==3.0.0
 mdurl==0.1.2
 pygments==2.19.1
+supabase==2.4.3
+opencv-python-headless==4.8.1.78
+pillow
+deepface
