@@ -5,6 +5,7 @@ streamlit==1.39.0
 streamlit-extras==0.4.0
 supabase==2.4.3
 python-dotenv==1.0.1
+pygame==2.5.2
 rich==13.9.4
 markdown-it-py==3.0.0
 mdurl==0.1.2
@@ -12,10 +13,5 @@ pygments==2.19.1
 supabase==2.4.3
 opencv-python-headless==4.8.1.78
 pillow
-deepface==0.0.79
-
-st-clickable-images==0.1.0
-
-pygame==2.5.2
-pyvirtualdisplay==3.0
-
+deepface
+st-clickable-images pygame already
