@@ -1,29 +1,32 @@
-import pygame
-import sys
+import streamlit as st
 
-# Initialize Pygame
-pygame.init()
+# Page config
+st.set_page_config(page_title="Simple Color Display", layout="centered")
 
-# Window size
-WIDTH, HEIGHT = 600, 400
-window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Simple Color Display")
-
-# Choose a color (R, G, B)
+# Target color
 color = (100, 150, 255)  # Light Blue
 
-# Main Loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:       # Window close
-            running = False
-        if event.type == pygame.KEYDOWN:    # Any key press
-            running = False
+st.title("Simple Color Display (Streamlit Version)")
 
-    window.fill(color)  # Fill the screen with the chosen color
-    pygame.display.update()
+# Convert RGB to CSS hex
+hex_color = '#%02x%02x%02x' % color
 
-# Quit
-pygame.quit()
-sys.exit()
+# Display color block
+st.markdown(
+    f"""
+    <div style='
+         width: 600px;
+         height: 400px;
+         background-color: {hex_color};
+         border: 3px solid black;
+         border-radius: 10px;
+         margin-top: 20px;'>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Exit button
+if st.button("Close Window"):
+    st.write("Window closed (simulation).")
+    st.stop()
