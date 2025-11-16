@@ -1,133 +1,81 @@
 import streamlit as st
-import cv2
-from deepface import DeepFace
-import json
-import base64
-import time
-from st_clickable_images import clickable_images
-
-if "current_section" not in st.session_state:
-    st.session_state.current_section = None
-
+import pandas as pd
 
 # ----------------------- Must be First -----------------------
 st.set_page_config(page_title="Autistic Support Dashboard", layout="wide")
 
 SECTIONS = [
-    
     "🧘 Color Tracker",
     "🎮 Games",
     "🎨 Cartoon Therapy",
     "🎮 LifeQuest Game",
 ]
 
-
 # ----------------------- Sidebar -----------------------
 st.sidebar.title("📋 Dashboard Menu")
 menu = st.sidebar.radio(
     "Go to",
-    ["🏠 Home"] + SECTIONS,   # 👈 list + list works fine
+    ["🏠 Home"] + SECTIONS,
     index=0
 )
 
-
-
-
-
-
-
-
-
+# ----------------------- Home Page -----------------------
 if menu == "🏠 Home":
     st.title("🏠 Welcome to Autistic Support Dashboard")
-    st.success("This dashboard provides real-time emotion detection, gaze tracking, heart rate monitoring, and interactive therapy tools.")
+    st.success(
+        "This dashboard provides basic interactive tools for therapy and learning.\n\n"
+        "Cloud-compatible version: tracking & games run inside Streamlit."
+    )
 
-    
-    # ------------------------------
- 
+# ----------------------- Color Tracker -----------------------
 elif menu == "🧘 Color Tracker":
     st.title("🖍️ Color Preference Tracker")
-    st.info("Track color attention using predefined gaze-based games.")
+    st.info("This cloud version shows color blocks directly in Streamlit.")
 
-    
+    # ------------------ Tracker UI Function ------------------
+    def show_color_block(r, g, b):
+        """Displays a color block in Streamlit."""
+        hex_color = '#%02x%02x%02x' % (r, g, b)
+        st.markdown(
+            f"""
+            <div style='
+                width: 600px;
+                height: 350px;
+                background-color: {hex_color};
+                border-radius: 12px;
+                border: 3px solid black;
+                margin-top: 20px;'>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    script_paths = {
-        "Tracker 1": "pages/color1.py",
-        "Tracker 2": "D:/Streamlite/color2.py",
-        "Tracker 3": "D:/Streamlite/color3.py",
-        "Tracker 4": "D:/Streamlite/color4.py",
-    }
+    def tracker_ui(title, default_color):
+        st.subheader(title)
+        st.write("Color displayed below:")
 
-    def show_tracker_controls(tracker_name):
-        st.subheader(f"{tracker_name}")
+        show_color_block(*default_color)
 
-        if st.button(f"▶️ Start {tracker_name}"):
-            if os.path.exists(script_paths[tracker_name]):
-                os.system(f'python "{script_paths[tracker_name]}" &')
+        if st.button(f"Record {title} Data"):
+            st.success("In cloud version, recording is simulated.")
+            st.code(f"Color viewed: RGB {default_color}")
 
-                st.success(f"{tracker_name} started. Complete the session.")
-            else:
-                st.error(f"{tracker_name} script not found.")
-
-        if st.button(f"📄 Show {tracker_name} Report"):
-            result_path = result_paths[tracker_name]
-            if os.path.exists(result_path):
-                with open(result_path, "r", encoding="utf-8") as f:
-                    report_lines = f.readlines()
-
-                # Debug: show raw content
-                st.text("📝 Raw Report Content:")
-                st.code("".join(report_lines))
-
-                # Parse float values with "sec"
-                color_scores = {}
-                for line in report_lines:
-                    line = line.strip()
-
-                    # Skip empty or non-data lines
-                    if not line or "Summary" in line:
-                        continue
-
-                    if ':' in line:
-                        parts = line.split(':', 1)
-                        if len(parts) == 2:
-                            color = parts[0].strip()
-                            value_str = parts[1].strip().replace("sec", "").strip()
-                            try:
-                                score = float(value_str)
-                                color_scores[color] = score
-                            except ValueError:
-                                continue  # skip invalid numbers
-
-                if color_scores:
-                    st.subheader("🎯 Color-wise Attention Summary (Seconds)")
-                    df = pd.DataFrame.from_dict(color_scores, orient='index', columns=['Time (sec)'])
-                    df = df.round(2)
-                    st.bar_chart(df)
-                    st.table(df)
-                else:
-                    st.warning("Report is empty or incorrectly formatted.")
-            else:
-                st.warning(f"No report found for {tracker_name}.")
-
-
-# 1. Set the page layout to 'wide' for a full-screen-like experience
-    # Create 5 tabs
+    # ------------------ Tabs ------------------
     tab1, tab2, tab3, tab4 = st.tabs([
-        "🎨 colorTracker 1",
-        "🎨 colorTracker 2", 
-        "🎨 colorTracker 3",
-        "🎨 colorTracker 4"
+        "🎨 ColorTracker 1",
+        "🎨 ColorTracker 2",
+        "🎨 ColorTracker 3",
+        "🎨 ColorTracker 4"
     ])
 
     with tab1:
-        show_tracker_controls("Tracker 1")
-   
+        tracker_ui("Tracker 1", (100, 150, 255))
+
     with tab2:
-        show_tracker_controls("Tracker 2")
+        tracker_ui("Tracker 2", (255, 200, 100))
 
     with tab3:
-        show_tracker_controls("Tracker 3")
+        tracker_ui("Tracker 3", (150, 255, 140))
 
     with tab4:
-        show_tracker_controls("Tracker 4")
+        tracker_ui("Tracker 4", (240, 120, 120))
