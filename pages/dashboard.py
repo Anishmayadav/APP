@@ -12,24 +12,32 @@ pygame.init()
 WIDTH, HEIGHT = 400, 300
 screen = pygame.Surface((WIDTH, HEIGHT))
 
-st.title("🎮 Mini Pygame Demo in Streamlit")
+st.title("🎨 Simple Color Game")
+
+colors = [
+    (255, 0, 0),   # red
+    (0, 255, 0),   # green
+    (0, 0, 255),   # blue
+    (255, 255, 0), # yellow
+    (255, 0, 255), # magenta
+    (0, 255, 255)  # cyan
+]
 
 if st.button("Start Game"):
-    placeholder = st.empty()
-    color = (255, 0, 0)
+    ph = st.empty()
     clock = pygame.time.Clock()
-    start = time.time()
 
-    while time.time() - start < 5:  # Run for 5 seconds
-        screen.fill(color)
+    for c in colors:     # Change color every loop
+        screen.fill(c)
 
-        # Convert pygame surface → numpy → PIL image
+        # Convert pygame frame → Streamlit image
         frame = pygame.surfarray.array3d(screen)
         frame = np.rot90(frame)
         img = Image.fromarray(frame)
 
-        placeholder.image(img, use_container_width=True)
+        ph.image(img, use_container_width=True)
 
-        clock.tick(30)  # 30 FPS
+        time.sleep(1)    # show each color for 1 sec
+        clock.tick(30)
 
 pygame.quit()
