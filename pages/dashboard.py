@@ -4,78 +4,103 @@ import pandas as pd
 # ----------------------- Must be First -----------------------
 st.set_page_config(page_title="Autistic Support Dashboard", layout="wide")
 
-SECTIONS = [
-    "🧘 Color Tracker",
-    "🎮 Games",
-    "🎨 Cartoon Therapy",
-    "🎮 LifeQuest Game",
-]
+
+# ----------------------- Color Tracker Components -----------------------
+
+def color_tracker_page(rgb_color, title="Color Tracker"):
+    """Renders a full-screen color block inside Streamlit."""
+    
+    st.title(title)
+
+    hex_color = '#%02x%02x%02x' % rgb_color
+
+    st.markdown(
+        f"""
+        <div style="
+            width: 95vw;
+            height: 85vh;
+            background-color: {hex_color};
+            border-radius: 15px;
+            border: 5px solid black;
+        ">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    if st.button("⬅️ Back to Dashboard"):
+        st.session_state["page"] = "home"
+        st.rerun()
+
 
 # ----------------------- Sidebar -----------------------
+
+if "page" not in st.session_state:
+    st.session_state.page = "home"
+
 st.sidebar.title("📋 Dashboard Menu")
+
 menu = st.sidebar.radio(
     "Go to",
-    ["🏠 Home"] + SECTIONS,
+    ["🏠 Home", "🧘 Color Tracker"],
     index=0
 )
 
+
 # ----------------------- Home Page -----------------------
+
 if menu == "🏠 Home":
+    st.session_state.page = "home"
+
     st.title("🏠 Welcome to Autistic Support Dashboard")
-    st.success(
-        "This dashboard provides basic interactive tools for therapy and learning.\n\n"
-        "Cloud-compatible version: tracking & games run inside Streamlit."
-    )
+    st.success("Real-time therapy tools including color tracking, games, and emotion detection.")
+
 
 # ----------------------- Color Tracker -----------------------
+
 elif menu == "🧘 Color Tracker":
-    st.title("🖍️ Color Preference Tracker")
-    st.info("This cloud version shows color blocks directly in Streamlit.")
 
-    # ------------------ Tracker UI Function ------------------
-    def show_color_block(r, g, b):
-        """Displays a color block in Streamlit."""
-        hex_color = '#%02x%02x%02x' % (r, g, b)
-        st.markdown(
-            f"""
-            <div style='
-                width: 600px;
-                height: 350px;
-                background-color: {hex_color};
-                border-radius: 12px;
-                border: 3px solid black;
-                margin-top: 20px;'>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    st.title("🖍️ Color Preference Trackers")
+    st.info("Choose a color tracker. Each opens full screen.")
 
-    def tracker_ui(title, default_color):
-        st.subheader(title)
-        st.write("Color displayed below:")
-
-        show_color_block(*default_color)
-
-        if st.button(f"Record {title} Data"):
-            st.success("In cloud version, recording is simulated.")
-            st.code(f"Color viewed: RGB {default_color}")
-
-    # ------------------ Tabs ------------------
     tab1, tab2, tab3, tab4 = st.tabs([
-        "🎨 ColorTracker 1",
-        "🎨 ColorTracker 2",
-        "🎨 ColorTracker 3",
-        "🎨 ColorTracker 4"
+        "🎨 Tracker 1",
+        "🎨 Tracker 2",
+        "🎨 Tracker 3",
+        "🎨 Tracker 4",
     ])
 
     with tab1:
-        tracker_ui("Tracker 1", (100, 150, 255))
+        if st.button("Start Tracker 1"):
+            st.session_state.page = "c1"
+            st.rerun()
 
     with tab2:
-        tracker_ui("Tracker 2", (255, 200, 100))
+        if st.button("Start Tracker 2"):
+            st.session_state.page = "c2"
+            st.rerun()
 
     with tab3:
-        tracker_ui("Tracker 3", (150, 255, 140))
+        if st.button("Start Tracker 3"):
+            st.session_state.page = "c3"
+            st.rerun()
 
     with tab4:
-        tracker_ui("Tracker 4", (240, 120, 120))
+        if st.button("Start Tracker 4"):
+            st.session_state.page = "c4"
+            st.rerun()
+
+
+# ----------------------- Full Screen Color Pages -----------------------
+
+if st.session_state.page == "c1":
+    color_tracker_page((100, 150, 255), "🎨 Color Tracker 1 (Light Blue)")
+
+if st.session_state.page == "c2":
+    color_tracker_page((255, 100, 120), "🎨 Color Tracker 2 (Pink Shade)")
+
+if st.session_state.page == "c3":
+    color_tracker_page((120, 255, 140), "🎨 Color Tracker 3 (Green Shade)")
+
+if st.session_state.page == "c4":
+    color_tracker_page((255, 220, 90), "🎨 Color Tracker 4 (Yellow Shade)")
