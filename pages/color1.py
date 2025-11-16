@@ -1,32 +1,25 @@
 import streamlit as st
 
-# Page config
-st.set_page_config(page_title="Simple Color Display", layout="centered")
+st.set_page_config(page_title="Color Tracker 1", layout="wide")
 
-# Target color
 color = (100, 150, 255)  # Light Blue
-
-st.title("Simple Color Display (Streamlit Version)")
-
-# Convert RGB to CSS hex
 hex_color = '#%02x%02x%02x' % color
 
-# Display color block
+st.title("🎨 Color Tracker 1")
+
 st.markdown(
     f"""
-    <div style='
-         width: 600px;
-         height: 400px;
+    <div style="
+         width: 100vw;
+         height: 90vh;
          background-color: {hex_color};
-         border: 3px solid black;
+         border: 5px solid black;
          border-radius: 10px;
-         margin-top: 20px;'>
+         position: fixed;
+         top: 60px;
+         left: 0px;
+         ">
     </div>
     """,
     unsafe_allow_html=True
 )
-
-# Exit button
-if st.button("Close Window"):
-    st.write("Window closed (simulation).")
-    st.stop()
