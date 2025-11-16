@@ -14,4 +14,4 @@ supabase==2.4.3
 opencv-python-headless==4.8.1.78
 pillow
 deepface
-st-clickable-images pygame already
+st-clickable-images 
