@@ -54,9 +54,7 @@ elif menu == "🧘 Color Tracker":
 
     script_paths = {
         "Tracker 1": "pages/color1.py",
-        "Tracker 2": "D:/Streamlite/color2.py",
-        "Tracker 3": "D:/Streamlite/color3.py",
-        "Tracker 4": "D:/Streamlite/color4.py",
+      
     }
 
     def show_tracker_controls(tracker_name):
