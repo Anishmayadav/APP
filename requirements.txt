@@ -8,3 +8,5 @@ markdown-it-py==3.0.0
 mdurl==0.1.2
 pygments==2.19.1
 supabase==2.4.3
+opencv-python-headless==4.8.1.78
+
