@@ -1,25 +1,20 @@
-import streamlit as st
+import pygame
+import sys
 
-st.set_page_config(page_title="Color Tracker 1", layout="wide")
+pygame.init()
+WIDTH, HEIGHT = 600, 400
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Color Tracker 1")
+color = (100, 150, 255)
 
-color = (100, 150, 255)  # Light Blue
-hex_color = '#%02x%02x%02x' % color
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+            running = False
 
-st.title("🎨 Color Tracker 1")
+    window.fill(color)
+    pygame.display.update()
 
-st.markdown(
-    f"""
-    <div style="
-         width: 100vw;
-         height: 90vh;
-         background-color: {hex_color};
-         border: 5px solid black;
-         border-radius: 10px;
-         position: fixed;
-         top: 60px;
-         left: 0px;
-         ">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+pygame.quit()
+sys.exit()
