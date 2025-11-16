@@ -1,32 +1,43 @@
+import os
+import streamlit as st
 import pygame
-import sys
-import asyncio # <--- ADD THIS
+import numpy as np
+from PIL import Image
+import time
+
+# --- Important: Run Pygame in headless mode ---
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 pygame.init()
-WIDTH, HEIGHT = 600, 400
-window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Color Tracker 1")
-color = (100, 150, 255)
+screen = pygame.Surface((600, 400))
+color = (255, 0, 0)
 
-# 1. CHANGE: Define the main loop as an asynchronous function
-async def main(): 
+st.title("🎮 Pygame Color Game inside Streamlit")
+
+start_button = st.button("Start Game")
+
+if start_button:
+    placeholder = st.empty()
     running = True
+    frame_rate = 30
+    clock = pygame.time.Clock()
+    start_time = time.time()
+
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            # Note: KEYDOWN is often not captured correctly in the web environment 
-            # as the browser handles those events differently.
+        # Fill the screen with color
+        screen.fill(color)
 
-        window.fill(color)
-        pygame.display.update()
+        # Convert to NumPy array for display
+        image_array = pygame.surfarray.array3d(screen)
+        image_array = np.rot90(image_array)
+        img = Image.fromarray(image_array)
 
-        # 2. ADD THIS: Yield control back to the event loop
-        await asyncio.sleep(0) 
+        placeholder.image(img, caption="Color Game Running...", use_container_width=True)
 
-    pygame.quit()
-    sys.exit()
+        clock.tick(frame_rate)
 
-if __name__ == '__main__':
-    # 3. CHANGE: Run the main loop using asyncio
-    asyncio.run(main())
+        # Run for ~10 seconds as demo
+        if time.time() - start_time > 10:
+            running = False
+
+pygame.quit()
